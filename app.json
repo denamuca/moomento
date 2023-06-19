@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a5ecbb65-efaf-41aa-9167-70b0d515e288"
+      }
+    },
+    "owner": "denamuca16"
   }
 }
