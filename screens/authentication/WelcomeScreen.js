@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Welcome from '../../assets/svg/welcome'
 
 const WelcomeScreen = ({ navigation }) => {
@@ -11,7 +11,7 @@ const WelcomeScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate("SignIn")} style={styles.buttonPrimary}>
                     <Text style={styles.buttonPrimaryText}>Sign In</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.buttonPrimary}>
+                <TouchableOpacity onPress={() => navigation.navigate("Signup")} style={styles.buttonPrimary}>
                     <Text style={styles.buttonPrimaryText}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 40,
         justifyContent: "center",
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#fff',
     },
     title: {
         fontSize: 45,
