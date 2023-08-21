@@ -3,7 +3,7 @@ import { View, TextInput, Button } from 'react-native';
 import firebase from './../../firebaseConfig';
 
 
-const SignInScreen = () => {
+const SignInScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,6 +15,7 @@ const SignInScreen = () => {
                 // Sign in successful
                 const user = userCredential.user;
                 console.log('User signed in:', user.email);
+                navigation.navigate("Home");
             })
             .catch((error) => {
                 // Handle sign in errors
