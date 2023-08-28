@@ -2,39 +2,28 @@ import React, { useState } from "react";
 import {
   View,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
   Text,
+  StyleSheet,
 } from "react-native";
 import firebase from "./../../firebaseConfig";
 import Left from "../../assets/svg/left";
 
-const SignInScreen = ({ navigation }) => {
+const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [resetSent, setResetSent] = useState(false);
   const [error, setError] = useState(null);
-  const [password, setPassword] = useState("");
 
-  const handleSignIn = () => {
+  const handleResetPassword = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("User signed in:", user.email);
-        navigation.navigate("Home");
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setResetSent(true);
       })
       .catch((error) => {
-        switch (error.code) {
-          case "auth/invalid-email":
-            setError("Invalid email address.");
-            break;
-          case "auth/wrong-password":
-            setError("Invalid password.");
-            break;
-          // Handle other error codes as needed
-          default:
-            setError("An error occurred while signing in.");
-        }
+        console.log("Forget password error:", error);
+        setError(error.message);
       });
   };
 
@@ -46,34 +35,30 @@ const SignInScreen = ({ navigation }) => {
           style={styles.headerButton}
         >
           <Left />
-          <Text style={styles.headerTitle}>Sign In</Text>
+          <Text style={styles.headerTitle}>Forget Password</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.wrapper}>
         <TextInput
           placeholder="Email"
+          value={email}
+          style={styles.textInput}
           onChangeText={(text) => setEmail(text)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => setPassword(text)}
-          style={styles.textInput}
         />
         {<Text>{error}</Text>}
-        <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
-          <Text style={styles.linkText}>Forget Password?</Text>
+        <TouchableOpacity
+          onPress={handleResetPassword}
+          style={styles.buttonPrimary}
+        >
+          <Text style={styles.buttonPrimaryText}>Reset Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleSignIn} style={styles.buttonPrimary}>
-          <Text style={styles.buttonPrimaryText}>Sign In</Text>
-        </TouchableOpacity>
+        {resetSent && <Text>Password reset email sent</Text>}
       </View>
     </View>
   );
 };
 
-export default SignInScreen;
+export default ForgotPasswordScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
